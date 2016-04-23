@@ -70,15 +70,26 @@ function socketserver() {
 
 				if (data.size() != 0) {
 
-					this.ui.main_grp.console_output.appendPlainText(data);
+					var command = "";
 
-					this.ui.main_grp.console_output.appendPlainText(data.size());
+					for ( var i = 0; i < data.size(); ++i) {
+					    command = command.concat(String.fromCharCode(data.at(i)));
+					}
 
-					if (data.size() > 10) {
+					this.ui.main_grp.console_output.appendPlainText(command);
 
-						var str = new String(data.data, data.length());
+					if (command == "quit") {
 
-						this.ui.main_grp.console_output.appendPlainText(str);
+						if (this.server) {
+							this.ui.main_grp.console_output.appendPlainText("Stoping server...");
+							this.server.close()
+							this.ui.main_grp.console_output.appendPlainText("Server succesfully stoped...");
+							this.ui.status_bar_grp.status_bar_label.text = "Waiting to start...";
+							this.ui.main_grp.control_button.text = "Start Server";
+
+							break;
+						}
+
 					}
 				}
 			}
@@ -91,7 +102,7 @@ function socketserver() {
 	}
 
 	//// <load ui>
-		this.ui = UiLoader.load("D:/Development/works/qtscriptsnipets/SocketServer/SocketServer.ui");
+		this.ui = UiLoader.load("D:/Development/works/qtscriptsnipets/Python2QtScript-SocketServer/code/SocketServer.ui");
 		ui.show();
 	 ///// </load ui>
 		this.ui.main_grp.control_button.clicked.connect(this, this.control_action);
