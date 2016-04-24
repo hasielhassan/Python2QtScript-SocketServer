@@ -1,3 +1,5 @@
+
+
 function socketserver() {
 
 	this.control_action = function() {
@@ -73,10 +75,23 @@ function socketserver() {
 					var command = "";
 
 					for ( var i = 0; i < data.size(); ++i) {
-					    command = command.concat(String.fromCharCode(data.at(i)));
+						command = command.concat(String.fromCharCode(data.at(i)));
 					}
 
 					this.ui.main_grp.console_output.appendPlainText(command);
+
+					if (command.substring(0,6) == "code::") {
+
+						this.ui.main_grp.console_output.appendPlainText("Evaluating QTScript code commands...");
+
+						var code = command.replace("code::", ""); 
+
+						var result = eval(code);
+
+						this.ui.main_grp.console_output.appendPlainText(result);
+
+					}
+
 
 					if (command == "quit") {
 
