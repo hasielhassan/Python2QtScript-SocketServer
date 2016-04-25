@@ -1,5 +1,4 @@
-#client code
-import time
+
 import socket
 client = socket.socket()
 client.connect(("localhost", 8080))
@@ -9,7 +8,5 @@ while True:
     client.send(message)
     if message == "quit":
         break
-    else:
-        client.send(message)
 
 print "Goodby"
