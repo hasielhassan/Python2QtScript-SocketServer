@@ -80,13 +80,25 @@ function socketserver() {
 
 					this.ui.main_grp.console_output.appendPlainText(command);
 
-					if (command.substring(0,6) == "code::") {
+					if (command.substring(0,6) == ":code:") {
 
 						this.ui.main_grp.console_output.appendPlainText("Evaluating QTScript code commands...");
 
-						var code = command.replace("code::", ""); 
+						var code = command.replace(":code:", ""); 
 
-						var result = eval(code);
+						this.ui.main_grp.console_output.appendPlainText(code);
+
+						try {
+
+							var result = eval(code);
+						}
+
+						catch (error) {
+
+							var result = "Error, evaluating code!!...";
+						}
+
+						
 
 						this.ui.main_grp.console_output.appendPlainText(result);
 
